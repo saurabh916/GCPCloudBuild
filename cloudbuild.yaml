@@ -1,16 +1,16 @@
 steps:
-#First Clone from Google Cloud Source Repository  
+#First Clone from Google Cloud Source Repository
 - name: 'gcr.io/cloud-builders/git'
-  args: ['clone','https://source.developers.google.com/p/${_PROJECT}/r/${_REPO_NAME}']
+  args: ['clone','https://github.com/saurabh916/GCPCloudBuild.git']
 
-#Build the image 
+#Build the image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build','-t','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}','.']
 
-#Push the image  
+#Push the image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push','gcr.io/${_PROJECT}/${_CONTAINERNAME}:${_VERSION}']
-  
+
 #Update the container image using kubectl set
 - name: 'gcr.io/cloud-builders/kubectl'
   args:
@@ -21,21 +21,20 @@ steps:
   env:
   - 'CLOUDSDK_COMPUTE_ZONE=${_ZONE}'
   - 'CLOUDSDK_CONTAINER_CLUSTER=${_GKE_CLUSTER}'
-  
+
 substitutions:
     #GCP Specific configuration. Please DON'T change anything
     _PROJECT: My First Project
     _ZONE: asia-south1-a
     _GKE_CLUSTER: k8-clusters
-    
+
     #Repository Specific configuration. DevOps can change this settings
     _DEPLOYMENTNAME: k8s-deployment
-    _CONTAINERNAME: container-demo    
-    _REPO_NAME: cicd-service
+    _CONTAINERNAME: container-demo
     
+
     # Developers ONLY change
     _VERSION: v1.1
-    
+
 options:
     substitution_option: 'ALLOW_LOOSE'
-
