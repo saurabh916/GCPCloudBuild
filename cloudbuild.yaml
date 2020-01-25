@@ -30,8 +30,8 @@ substitutions:
 
     #Repository Specific configuration. DevOps can change this settings
     _DEPLOYMENTNAME: k8s-deployment
-    _CONTAINERNAME: container-demo
-    
+    _CONTAINERNAME: cbimage
+
 
     # Developers ONLY change
     _VERSION: v1.1
